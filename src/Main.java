@@ -1,23 +1,54 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
+        // Create a UAV
+        System.out.print("UAV boş ağırlığını girin: ");
+        float emptyWeight = scanner.nextFloat();
 
-        Missile fuze = new Missile(100,50, "hava");
-        UAV ucak = new UAV(100,50,10, false ,true);
+        System.out.print("UAV maksimum kalkış ağırlığını girin: ");
+        float maxWeight = scanner.nextFloat();
+
+        System.out.print("UAV füze limiti: ");
+        int missileLimit = scanner.nextInt();
+
+        System.out.print("UAV uçuyor mu? (true/false): ");
+        boolean isFlying = scanner.nextBoolean();
+
+        System.out.print("UAV füze taşıyabilir mi? (true/false): ");
+        boolean canHoldMissile = scanner.nextBoolean();
+
+        UAV uav = new UAV(emptyWeight, maxWeight, missileLimit, isFlying, canHoldMissile);
+
+        // Create a Missile
+        System.out.print("Füze menzilini girin: ");
+        float range = scanner.nextFloat();
+
+        System.out.print("Füze ağırlığını girin: ");
+        float weight = scanner.nextFloat();
+
+        scanner.nextLine(); // consume the newline
+
+        System.out.print("Füze hedefini girin (hava/kara): ");
+        String target = scanner.nextLine();
+
+        Missile missile = new Missile(range, weight, target);
+
         List<Missile> missiles = new ArrayList<>();
+        missiles.add(missile);
 
+        // Add missile to UAV
+        uav.addMissile(missile);
 
+        // Fire missile
+        System.out.println(uav.fire());
 
-        System.out.println(ucak.Fire());
-        ucak.addMissile(missiles);
-
-        System.out.println(fuze.getTarget());
+        // Print UAV and missile details
+        System.out.println("UAV şu anda " + uav.getCurrentWeight() + " kg ağırlığında.");
+        System.out.println("Füze hedefi: " + missile.getTarget());
     }
-
-
 }

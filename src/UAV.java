@@ -1,60 +1,62 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.System.exit;
-
 public class UAV {
+    private final float emptyWeight; // immutable
+    private final float maxWeight; // immutable
+    private final int missileLimit;
+    private final List<Missile> missiles;
+    private final boolean canHoldMissile;
+    private boolean isFlying;
 
-    private float emptyWeight; // ucak bos iken agirligi
-    private float maxWeight; // ucagin max kalkis agirligi
-    private float filledWeight; // dolu iken agirligi
-    private int missleLimit;
-    List<Missile> missiles = new ArrayList<>();
-
-    private String missleType;
-
-
-    //UAV nin durumlari
-    private boolean isFlying; // ucak ucup ucmadigini belirleyen  degisken
-    private boolean canHoldMissle; // ucak fuze tasiyabildigini yada tasiyamadigini belirleyen degisken
-
-    public UAV(float emptyWeight, float maxWeight, int missleLimit, boolean isFlying, boolean canHoldMissle) {
+    public UAV(float emptyWeight, float maxWeight, int missileLimit, boolean isFlying, boolean canHoldMissile) {
         this.emptyWeight = emptyWeight;
         this.maxWeight = maxWeight;
-        this.missleLimit = missleLimit;
+        this.missileLimit = missileLimit;
         this.isFlying = isFlying;
-        this.canHoldMissle = canHoldMissle;
+        this.canHoldMissile = canHoldMissile;
+        this.missiles = new ArrayList<>();
     }
 
-
-    //fuze ekleme
-    public void addMissile(List<Missile> missiles){
-
-        if(!canHoldMissle){
-            System.out.println("ucak fuze tasiyamaz!");
-            exit(0);
+    // Add missile
+    public void addMissile(Missile missile) {
+        if (!canHoldMissile) {
+            System.out.println("Uçak füze taşıyamaz!");
+            return;
         }
-        if (missleLimit <= missiles.toArray().length)
-        {
-           System.out.println("Fuze tasima limitini gectiniz!");
+        if (missiles.size() >= missileLimit) {
+            System.out.println("Füze taşıma limitini geçtiniz!");
+            return;
         }
-
-        Missile newMissle = new Missile(100 , 10,"hava");
-
-        missiles.add(newMissle);
-
+        if ((getCurrentWeight() + missile.getWeight()) > maxWeight) {
+            System.out.println("Maksimum kalkış ağırlığını aştınız!");
+            return;
+        }
+        missiles.add(missile);
     }
 
-    public String Fire(){
-
-        if(!isFlying){
-            return "Ucak ucama durumunda olmadigi icin fuze ATESLIYEMEZ! ";
+    // Get current weight
+    public float getCurrentWeight() {
+        float currentWeight = emptyWeight;
+        for (Missile missile : missiles) {
+            currentWeight += missile.getWeight();
         }
-
-        return "Fuze ateslendi";
-
+        return currentWeight;
     }
 
+    // Fire missile
+    public String fire() {
+        if (!isFlying) {
+            return "Uçak uçma durumunda olmadığı için füze ATEŞLEYEMEZ!";
+        }
+        if (missiles.isEmpty()) {
+            return "Ateşlenecek füze yok!";
+        }
+        missiles.remove(0);
+        return "Füze ateşlendi!";
+    }
 
-
+    public void setFlying(boolean flying) {
+        isFlying = flying;
+    }
 }

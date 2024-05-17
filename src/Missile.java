@@ -1,32 +1,29 @@
 import java.util.Objects;
 
 public class Missile {
-
-    private float range;
-    private float weights;
-    private String target;
+    private final float range; // immutable
+    private final float weight; // immutable
+    private final String target; // immutable
 
     public float getRange() {
         return range;
     }
 
-    public float getWeights() {
-        return weights;
+    public float getWeight() {
+        return weight;
     }
 
     public String getTarget() {
         return target;
     }
 
-    // constructor
-    public Missile(float range, float weights , String target){
-        if(!Objects.equals(target, "hava") && !Objects.equals(target, "kara")){
-            System.out.println("Hedef sadece hava yada kara OLMALIDIR.");
+    // Constructor
+    public Missile(float range, float weight, String target) {
+        if (!Objects.equals(target, "hava") && !Objects.equals(target, "kara")) {
+            throw new IllegalArgumentException("Hedef sadece hava ya da kara OLMALIDIR.");
         }
-
         this.range = range;
-        this.weights = weights;
+        this.weight = weight;
         this.target = target;
-
     }
 }
