@@ -47,9 +47,10 @@ public class UAV {
 
     public String Fire(){
 
-        if(isFlying == false){
+        if(!isFlying){
             return "Ucak ucama durumunda olmadigi icin fuze ATESLIYEMEZ! ";
         }
+
         return "Fuze ateslendi";
 
     }
