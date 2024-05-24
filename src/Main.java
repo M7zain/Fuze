@@ -19,7 +19,7 @@ public class Main {
 
         System.out.print("UAV uçuyor mu? (true/false): ");
         boolean isFlying = scanner.nextBoolean();
-
+        //benim adim name
         System.out.print("UAV füze taşıyabilir mi? (true/false): ");
         boolean canHoldMissile = scanner.nextBoolean();
 
