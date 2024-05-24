@@ -11,7 +11,7 @@ public class Main {
         float emptyWeight = scanner.nextFloat();
 
         System.out.print("UAV maksimum kalkış ağırlığını girin: ");
-        //bunu muaz ekled
+        //bunu muaz ekledi
         float maxWeight = scanner.nextFloat();
 
         System.out.print("UAV füze limiti: ");
