@@ -24,7 +24,7 @@ public class Main {
         boolean canHoldMissile = scanner.nextBoolean();
 
         UAV uav = new UAV(emptyWeight, maxWeight, missileLimit, isFlying, canHoldMissile);
-
+        //fsdffsdf
         // Create a Missile
         System.out.print("Füze menzilini girin: ");
         float range = scanner.nextFloat();
