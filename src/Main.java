@@ -6,49 +6,75 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Create a UAV
-        System.out.print("UAV boş ağırlığını girin: ");
-        float emptyWeight = scanner.nextFloat();
+        while (true) {
+            float emptyWeight, maxWeight;
+            int missileLimit = 0;
+            boolean isFlying, canHoldMissile;
+            UAV uav = null;
 
-        System.out.print("UAV maksimum kalkış ağırlığını girin: ");
-        //bunu muaz ekledi
-        float maxWeight = scanner.nextFloat();
+            // Bir UAV oluştur
+            while (true) {
+                System.out.print("UAV boş ağırlığını girin: ");
+                emptyWeight = scanner.nextFloat();
+                if (emptyWeight == 0) {
+                    System.out.println("Program sonlandırılıyor...");
+                    return;
+                }
 
-        System.out.print("UAV füze limiti: ");
-        int missileLimit = scanner.nextInt();
+                System.out.print("UAV maksimum kalkış ağırlığını girin: ");
+                maxWeight = scanner.nextFloat();
 
-        System.out.print("UAV uçuyor mu? (true/false): ");
-        boolean isFlying = scanner.nextBoolean();
-        //benim adim name
-        System.out.print("UAV füze taşıyabilir mi? (true/false): ");
-        boolean canHoldMissile = scanner.nextBoolean();
+                if (emptyWeight > maxWeight) {
+                    System.out.println("UAV boş ağırlığı, UAV maksimum kalkış ağırlığından büyük olduğu için uçak uçamaz.");
+                    continue;
+                } else {
+                    System.out.print("UAV uçuyor mu? (true/false): ");
+                    isFlying = scanner.nextBoolean();
 
-        UAV uav = new UAV(emptyWeight, maxWeight, missileLimit, isFlying, canHoldMissile);
-        // Create a Missile
-        System.out.print("Füze menzilini girin: ");
-        float range = scanner.nextFloat();
+                    System.out.print("UAV füze taşıyabilir mi? (true/false): ");
+                    canHoldMissile = scanner.nextBoolean();
 
-        System.out.print("Füze ağırlığını girin: ");
-        float weight = scanner.nextFloat();
+                    if (canHoldMissile) {
+                        System.out.print("UAV füze limiti: ");
+                        missileLimit = scanner.nextInt();
+                    }
 
-        scanner.nextLine(); // consume the newline
+                    uav = new UAV(emptyWeight, maxWeight, missileLimit, isFlying, canHoldMissile);
+                    break; // döngüyü sonlandırmak için.
+                }
+            }
 
-        System.out.print("Füze hedefini girin (hava/kara): ");
-        String target = scanner.nextLine();
+            if (canHoldMissile) {
+                // Bir Füze oluştur
+                System.out.print("Füze menzilini girin: ");
+                float range = scanner.nextFloat();
 
-        Missile missile = new Missile(range, weight, target);
+                System.out.print("Füze ağırlığını girin: ");
+                float weight = scanner.nextFloat();
 
-        List<Missile> missiles = new ArrayList<>();
-        missiles.add(missile);
+                scanner.nextLine(); // satır sonu karakterini tüket
 
-        // Add missile to UAV
-        uav.addMissile(missile);
+                System.out.print("Füze hedefini girin (hava/kara): ");
+                String target = scanner.nextLine();
 
-        // Fire missile
-        System.out.println(uav.fire());
+                Missile missile = new Missile(range, weight, target);
 
-        // Print UAV and missile details
-        System.out.println("UAV şu anda " + uav.getCurrentWeight() + " kg ağırlığında.");
-        System.out.println("Füze hedefi: " + missile.getTarget());
+                List<Missile> missiles = new ArrayList<>();
+                missiles.add(missile);
+
+                // Füzeyi UAV'ye ekle
+                uav.addMissile(missile);
+
+                // Füze ateşle
+                System.out.println(uav.fire());
+
+                // UAV ve füze detaylarını yazdır
+                System.out.println("UAV şu anda " + uav.getCurrentWeight() + " kg ağırlığında.");
+                System.out.println("Füze hedefi: " + missile.getTarget());
+            } else {
+                System.out.println("UAV füze taşımıyor, füze ile ilgili işlemler atlanmıştır.");
+            }
+            System.out.println("*********************** ( Kodu sonlandırmak için '0' tuşuna basınız ) ***********************");
+        }
     }
 }
