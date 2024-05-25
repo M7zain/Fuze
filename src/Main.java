@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -11,6 +13,8 @@ public class Main {
             int missileLimit = 0;
             boolean isFlying, canHoldMissile;
             UAV uav = null;
+
+
 
             // Bir UAV oluştur
             while (true) {
@@ -25,8 +29,8 @@ public class Main {
                 maxWeight = scanner.nextFloat();
 
                 if (emptyWeight > maxWeight) {
-                    System.out.println("UAV boş ağırlığı, UAV maksimum kalkış ağırlığından büyük olduğu için uçak uçamaz.");
-                    continue;
+                    System.out.println("UAV boş ağırlığı, UAV maksimum kalkış ağırlığından büyük OLAMAZ!");
+
                 } else {
                     System.out.print("UAV uçuyor mu? (true/false): ");
                     isFlying = scanner.nextBoolean();
@@ -42,7 +46,7 @@ public class Main {
                     uav = new UAV(emptyWeight, maxWeight, missileLimit, isFlying, canHoldMissile);
                     break; // döngüyü sonlandırmak için.
                 }
-            }
+            } //1. while dongunun bitisi.
 
             if (canHoldMissile) {
                 // Bir Füze oluştur
@@ -68,8 +72,9 @@ public class Main {
                 // Füze ateşle
                 System.out.println(uav.fire());
 
+                float totalWeight = uav.getCurrentWeight() + (missile.getWeight()*missileLimit);
                 // UAV ve füze detaylarını yazdır
-                System.out.println("UAV şu anda " + uav.getCurrentWeight() + " kg ağırlığında.");
+                System.out.println("UAV şu anda " + totalWeight + " kg ağırlığında.");
                 System.out.println("Füze hedefi: " + missile.getTarget());
             } else {
                 System.out.println("UAV füze taşımıyor, füze ile ilgili işlemler atlanmıştır.");
@@ -77,4 +82,4 @@ public class Main {
             System.out.println("*********************** ( Kodu sonlandırmak için '0' tuşuna basınız ) ***********************");
         }
     }
-}
+} //2. while (butun kodu kapsayan while) sonu.
